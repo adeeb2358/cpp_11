@@ -1,0 +1,37 @@
+There's a separate directory with demo code for each major feature discussed
+in the module. The demo code is organised into test suites built using a
+test framework called Bandit. 
+
+The Bandit files are included with the demo code. For more information, see
+banditcpp.org.
+
+You will get some warnings when building the demo code. As the purpose of the
+code is to demonstrate various features, there are a lot of unused variables 
+and so on. Building the code is primarily useful to check that the various
+C++11 examples do indeed compile.
+
+There are various examples of ill-formed code included in the demo files. 
+They are disabled with #if COMPILE_ERROR directives. If you'd like to see
+what happens when you try to compile ill-formed code, change 
+#define COMPILE_ERROR from 0 to 1.
+
+Linux/MacOS X
+-----------------------------------------------------------------------------
+
+To build the test code, you'll need to have GCC 4.8.1 installed and have g++
+available in the PATH.
+
+Simply run make to build the demo code. There may be multiple executables 
+built, they will all be prefixed with run-. 
+
+Windows
+-----------------------------------------------------------------------------
+
+To build the test code, you'll need to have MinGW GCC 4.8.1 installed and 
+have g++ available in the PATH.
+
+Simply run make.bat to build the demo code. There may be multiple executables 
+built, they will all be prefixed with run-. 
+
+
+
