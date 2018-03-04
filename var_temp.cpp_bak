@@ -1,0 +1,57 @@
+#include "bigHeader.h"
+#include "var_temp.h"
+
+/**
+ * @brief      Class for csv printer. working with variadic templates perform
+ *             type computation at compile time Generate type structure
+ *             implement type safe function with arbitary number of arguments,
+ *             perform argument forwarding
+ *
+ * @tparam     Stream   { description }
+ * @tparam     Columns  { description }
+ */
+
+template<typename Stream, typename... Columns>
+class CSVPrinter{
+	public:
+		void output_line(const Columns&... columns){
+			//write_line(columns...);
+			write_line(validate(columns)...);
+		}
+	private:
+		const std::string _sep {","};
+		template<typename T>
+		const T& validate(const T& val){
+    		return val;
+		}
+
+   		template<typename Value, typename... Values>
+    	void write_line(const Value& val, const Values&... values) const{
+        	write_column(val, _sep);
+        	write_line(values...);
+    	}
+
+    	template<typename Value>
+    	void write_line(const Value &val) const{
+    		//std::cout << val <<"\n";
+    		write_column(val,_sep);
+    	}
+
+    	template<typename T>
+    	void write_column(const T& val, const std::string& terminator) const {
+        	std::cout << val <<"written\n";
+    	}
+};
+
+/*
+	working with the parameter pack
+	pack expansion and type count
+*/
+
+void check_var_temp(){
+	std::ofstream stream("output.csv");
+	CSVPrinter<decltype(stream),int,double,std::string> printer;
+	printer.output_line(0,1.0,"this is good");
+	stream.close();
+}
+
