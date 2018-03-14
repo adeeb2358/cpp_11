@@ -14,4 +14,6 @@
 #include <tuple>
 #include <memory>
 
+#include <utility> //for std::move
+
 #endif // BIG_HEADER_H

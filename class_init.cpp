@@ -2,7 +2,7 @@
 * @Author: adeeb2358
 * @Date:   2018-03-04 16:15:24
 * @Last Modified by:   adeeb2358
-* @Last Modified time: 2018-03-04 20:07:28
+* @Last Modified time: 2018-03-04 21:12:48
 */
 
 #include "bigHeader.h"
@@ -181,10 +181,100 @@ public:
 	DeletePlane& operator           =(DeletePlane&&) = default;
 };
 
+/*
+ 	override and final
+ 	override allows one method to override from
+ 	its base class implementation
+ 	final tells that it cant be overrided any more
+ 	when final is applioed to a class
+ 	it tells that it cant be inherited
+ */
+
+/*
+ 	Extented friend declaration
+ 	friend delcaration without the class keyword
+ */
+
+class A;
+class B;
+
+class Friend{
+	friend class A; //old declaration its still ok
+	friend B; //we can also do this now
+};
+typedef B B2;
+
+class Amigo{
+	friend B2;
+	friend class D; //declares new class D
+	//friend D; //error undeclared class found
+};	
+
+template <typename T, typename U>
+class Ami{
+	friend T; //OK
+/*	friend class U; 
+	//still and error, cant use an eloborate specifier in a template
+	
+*/
+};
+
+/*
+ 	Nested class access rights
+ 	can access other classes
+ */
+
+class NestedPlane{
+private:
+	int flap_angle;
+	class GPSNavigator {};
+	class AutoPilot{
+		GPSNavigator gps_navigator;
+		void adjustFlaps(NestedPlane& plane ,int flap_angle){
+			plane.flap_angle = flap_angle;
+		}
+	};
+};
+
+/*
+  	Uniformity in initialization
+	we can use braces for all kind of initialization
+*/
+
+int x{5};
+class Point{
+public:
+	int x,y;
+	Point(int x,int y)
+	:x(x),y(y){
+
+	}
+};
+
+class Hexagon{
+	int points[6];
+	Hexagon(): points{1,2,3,4,5,6}{
+
+	}
+};
+
+std::vector<int> myVector{1,2,3,4};
+
+std::vector<int> extract_core_points(const std::vector<int>& v){
+	return {v.front(),v[v.size()/2],v.back()};
+}
+
 void check_class_init(){
 	JetPlane myJetPlane("Airbus","A380-500");
 	SmallPlane mySmallPlane("Boeing");
 	PropPlane prop_plane("ATR");	
 	FloatPlane("Boeing FloatPlane");
+	Ami<std::string,std::string> rc; //OK
+	Ami<char,std::string> f;// OK friend char has no effect in the template
+
+	Point p1{10,20};
+	Point p2 = {10,20};
+
+	std::vector<int> core_points = extract_core_points({1,2,3,4,5,6});
 	return;
 }
