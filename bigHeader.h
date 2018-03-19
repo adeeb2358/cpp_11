@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <tuple>
 #include <memory>
+#include <stdexcept>
 
 #include <utility> //for std::move
 
